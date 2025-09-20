@@ -11,7 +11,8 @@ public:
     explicit OutGoingConnection(QObject *parent = nullptr);
     void connect_to_host(const QString &IpAddress, quint16 port = 12345);
     void send_massage_to_host(QString &massage_text);
-    QTcpSocket *socket() const;
+    void send_ping();
+    QTcpSocket* _socket;
 
 signals:
     void massage_recieved(const QString &message);
@@ -19,8 +20,6 @@ signals:
     void disconnected();
 
 private:
-    QTcpSocket* _socket;
-    void send_ping();
 
 private slots:
     void onReadyRead();

@@ -16,9 +16,11 @@ class ConnectToComputer : public QDialog
 public:
     explicit ConnectToComputer(QWidget *parent = nullptr);
     ~ConnectToComputer();
+    OutGoingConnection *outconn;
 
 private slots:
     void on_CancelBtn_clicked();
+    void on_ConnectBtn_clicked();
 
 private:
     Ui::ConnectToComputer *ui;

@@ -20,3 +20,11 @@ void ConnectToComputer::on_CancelBtn_clicked()
     this->close();
 }
 
+
+void ConnectToComputer::on_ConnectBtn_clicked()
+{
+    outconn = new OutGoingConnection(this);
+    outconn->connect_to_host(ui->IpAddr_lnedt->text()); // port in this version is already defined
+    outconn->send_ping();
+}
+

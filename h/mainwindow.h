@@ -4,7 +4,9 @@
 #include <QMainWindow>
 #include <QVector>
 #include <QDebug>
+#include <QRandomGenerator>
 
+#include "connect_to_computer.h"
 #include "incommingconnection.h"
 
 QT_BEGIN_NAMESPACE
@@ -25,6 +27,8 @@ struct MassageStorage
     QString Massage_text;
 };
 
+typedef int USER_ID;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -33,6 +37,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     IncommingConnection *InputTraffic;
+    ConnectToComputer *conn;
+    USER_ID myid{};
 
 private slots:
     void on_actionAbout_Developer_triggered();

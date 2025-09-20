@@ -2,6 +2,7 @@
 #define INCOMMINGCONNECTION_H
 
 #include <QObject>
+#include <QMessageBox>
 
 #include <QtNetwork/QTcpServer>
 #include <QtNetwork/QTcpSocket>

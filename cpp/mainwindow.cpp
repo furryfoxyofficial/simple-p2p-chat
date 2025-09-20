@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 
 #include "aboutme.h"
-#include "connect_to_computer.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -12,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     connect(ui->massge_line, &QLineEdit::returnPressed, this, &MainWindow::on_returnkey_Pressed);
     InputTraffic->startListening();
+    myid = QRandomGenerator::global()->generate();
+    ui->username_show->showMessage(QString::number(myid));
 }
 
 MainWindow::~MainWindow()
@@ -32,7 +33,7 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionConnect_with_Ip_triggered()
 {
-    ConnectToComputer *conn = new ConnectToComputer(this);
+    conn = new ConnectToComputer(this);
     conn->showNormal();
 }
 
@@ -49,5 +50,5 @@ void MainWindow::on_send_btn_clicked()
 void MainWindow::send_massage()
 {
     QString msg_line = ui->massge_line->text();
-    qDebug() << msg_line;
+    conn->outconn->send_massage_to_host(msg_line);
 }

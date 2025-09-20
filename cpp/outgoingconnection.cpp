@@ -20,15 +20,34 @@ void OutGoingConnection::send_massage_to_host(QString &massage_text) // host = d
         _socket->write(massage_text.toUtf8());
 }
 
-QTcpSocket *OutGoingConnection::socket() const // return socket and make it global in app
+void OutGoingConnection::send_ping()
 {
-    return _socket;
+    if (!_socket || _socket->state() == QAbstractSocket::ConnectedState)
+        return;
+
+    _socket->write("PING\n");
+    _socket->flush();
 }
 
 void OutGoingConnection::onReadyRead()
 {
     QByteArray data = _socket->readAll();
-    emit massage_recieved(QString::fromUtf8(data));
+    QString msg = QString::fromUtf8(data).trimmed();
+
+    if (msg == "ACCEPT")
+    {
+        qDebug() << "peer accepted connection";
+        emit connected();
+    }
+    else if (msg == "REJECT")
+    {
+        qDebug() << "peer rejected connection";
+        emit disconnected();
+    }
+    else
+    {
+        emit massage_recieved(msg);
+    }
 }
 
 void OutGoingConnection::onNewConnection()
